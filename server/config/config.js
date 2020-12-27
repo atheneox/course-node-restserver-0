@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'dev') {
 
 } else {
 
-    urlDB = 'mongodb+srv://amint:MindMint@as-1.gmdlg.mongodb.net/astudios?retryWrites=true&w=majority';
+    urlDB = process.env.MONGO_URI;
 
 }
 
