@@ -6,7 +6,7 @@ const User = new require('../models/user');
 const { verifyToken, verifyAdminRole } = require('../middlewares/authentication');
 const app = express();
 
-app.get('/user', verifyToken , function(req, res) {
+app.get('/user', verifyToken, function (req, res) {
 
     let from = req.query.from || 0;
     let limit = req.query.limit || 5;
@@ -14,7 +14,7 @@ app.get('/user', verifyToken , function(req, res) {
     from = Number(from);
     limit = Number(limit);
 
-    User.find({}, '_id name email google role status')
+    User.find({}, '_id name email google role status img')
         .limit(limit)
         .skip(from)
         .exec((err, users) => {
@@ -42,7 +42,7 @@ app.get('/user', verifyToken , function(req, res) {
 
 });
 
-app.post('/user', [verifyToken, verifyAdminRole], function(req, res) {
+app.post('/user', [verifyToken, verifyAdminRole], function (req, res) {
 
     let body = req.body;
 
@@ -68,7 +68,7 @@ app.post('/user', [verifyToken, verifyAdminRole], function(req, res) {
 
 });
 
-app.put('/user/:id', [verifyToken, verifyAdminRole], function(req, res) {
+app.put('/user/:id', [verifyToken, verifyAdminRole], function (req, res) {
 
     let id = req.params.id;
     let body = _.pick(req.body, ['name', 'email', 'img', 'role', 'status']);
@@ -91,11 +91,9 @@ app.put('/user/:id', [verifyToken, verifyAdminRole], function(req, res) {
 
 });
 
-app.delete('/user/:id', [verifyToken, verifyAdminRole], function(req, res) {
+app.delete('/user/:id', [verifyToken, verifyAdminRole], function (req, res) {
 
     let id = req.params.id;
-
-    // User.findByIdAndRemove(id, (err, userDelete) => {
 
     let changeStatus = {
         status: false
@@ -104,14 +102,10 @@ app.delete('/user/:id', [verifyToken, verifyAdminRole], function(req, res) {
     User.findByIdAndUpdate(id, changeStatus, { new: true }, (err, userDelete) => {
 
         if (err) {
-
             return res.status(400).json({
-
                 ok: false,
                 err
-
             });
-
         };
 
         if (!userDelete) {
@@ -127,7 +121,6 @@ app.delete('/user/:id', [verifyToken, verifyAdminRole], function(req, res) {
             ok: true,
             user: userDelete
         });
-
 
     });
 

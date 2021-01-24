@@ -35,7 +35,5 @@ try {
 }
 
 app.listen(process.env.PORT, () => {
-
     console.log(`listen port: ${process.env.PORT}`);
-
 });

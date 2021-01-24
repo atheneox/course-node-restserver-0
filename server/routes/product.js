@@ -1,6 +1,4 @@
 const express = require('express');
-const _ = require('underscore');
-
 const Product = require('../models/product');
 
 const { verifyToken, verifyAdminRole } = require('../middlewares/authentication');
